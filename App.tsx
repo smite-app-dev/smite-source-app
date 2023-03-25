@@ -1,11 +1,19 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import BuildScreen from "./screens/BuildScreen";
+import HomeScreen from "./screens/HomeScreen";
+import { RootStackParamList } from "./types/types";
 
-export default function App() {
+const RootStack = createNativeStackNavigator<RootStackParamList>();
+
+const App = () => {
   return (
-    <View className="items-center justify-center flex-1">
-      <Text className="text-2xl">Smite Source</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <RootStack.Navigator initialRouteName="Home">
+        <RootStack.Screen name="Home" component={HomeScreen} />
+        <RootStack.Screen name="Builds" component={BuildScreen} />
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
-}
+};
+export default App;
