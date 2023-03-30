@@ -1,9 +1,8 @@
 import { Text, View } from "react-native";
-import MyStack from "./MyStack";
 
 const Navbar = () => {
   return (
-    <View>
+    <View className="flex flex-row">
       <Text>Menu Hamburger</Text>
       <Text>Image with Logo</Text>
       <Text>Search Icon</Text>

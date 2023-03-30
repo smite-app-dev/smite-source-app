@@ -29,21 +29,30 @@ export async function fetchMethod(
 }
 
 export async function getSession(): Promise<string> {
-  const { session_id }: { session_id: string } = await fetchMethod(
-    "createsession",
-    SMITE_DEV_ID,
-    SMITE_AUTH_KEY
-  );
-  return session_id;
+  try {
+    const { session_id }: { session_id: string } = await fetchMethod(
+      "createsession",
+      SMITE_DEV_ID,
+      SMITE_AUTH_KEY
+    );
+    return session_id;
+  } catch (error) {
+    console.log(error);
+  }
+  return "";
 }
 
-export async function testSession() {
+export async function testSession(sessionId?: string) {
   const { signature, timestamp } = createSignature(
     SMITE_DEV_ID,
     "testsession",
     SMITE_AUTH_KEY
   );
-  const sessionId = await getSession();
+
+  if (!sessionId) {
+    sessionId = await getSession();
+  }
+
   const { data } = await axios.get(
     `${baseURL}/testsessionJson/${SMITE_DEV_ID}/${signature}/${sessionId}/${timestamp}`
   );
